@@ -1,0 +1,12 @@
+{application, totp,
+ [
+  {description, "Erlang adaptation of Time-Based One-Time Password Algorithm"},
+  {vsn, "0.0.0"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib,
+                  hotp
+                 ]},
+  {env, []}
+ ]}.
