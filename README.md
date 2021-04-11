@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ibnfirnas/erlang-totp.svg?branch=master)](https://travis-ci.org/ibnfirnas/erlang-totp)
+[![Build Status](https://travis-ci.org/xandkar/erlang-totp.svg?branch=master)](https://travis-ci.org/xandkar/erlang-totp)
 
 TOTP
 ====
