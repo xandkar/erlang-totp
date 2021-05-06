@@ -1,4 +1,4 @@
 [{<<"hotp">>,
-  {git,"https://github.com/ibnfirnas/erlang-hotp.git",
-       {ref,"08d24d0bfaba4861903b3f334164cffd44ea923e"}},
+  {git,"https://github.com/xandkar/erlang-hotp.git",
+       {ref,"a277117c1204d37aef0cf35ebc4fc16e40fec259"}},
   0}].

@@ -1,7 +1,7 @@
 {application, totp,
  [
   {description, "Erlang adaptation of Time-Based One-Time Password Algorithm, as described in RFC 6238"},
-  {vsn, "0.0.1"},
+  {vsn, "0.0.2"},
   {registered, []},
   {applications, [
                   kernel,
