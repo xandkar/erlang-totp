@@ -1,3 +1,5 @@
+REBAR := ./rebar3
+
 .PHONY: \
 	all \
 	compile \
@@ -6,26 +8,27 @@
 	dialyze \
 	test
 
-all: travis_ci dialyze
+all:
+	$(MAKE) compile
+	$(MAKE) dialyze
+	$(MAKE) test
 
-travis_ci: clean deps compile test
+travis_ci:
+	rebar3 compile
+	rebar3 do dialyzer
+	rebar3 as test do eunit,cover
 
-deps: deps_get deps_update
-
-deps_get:
-	@rebar get-deps
-
-deps_update:
-	@rebar update-deps
+deps:
+	@$(REBAR) get-deps
 
 compile:
-	@rebar compile
+	@$(REBAR) compile
 
 clean:
-	@rebar clean
+	@$(REBAR) clean
 
 dialyze:
-	@dialyzer deps/*/ebin/*.beam ebin/*.beam test/*.beam
+	@$(REBAR) do dialyzer
 
 test:
-	@rebar ct skip_deps=true
+	@$(REBAR) as test do eunit,cover

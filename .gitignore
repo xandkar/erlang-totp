@@ -1,4 +1,1 @@
-deps/
-ebin/
-logs/
-test/*.beam
+_build/

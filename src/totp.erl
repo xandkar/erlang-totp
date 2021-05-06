@@ -6,8 +6,6 @@
 -export(
     [ cons/1
     , cons/2
-
-    , tests_rfc6238/0
     ]).
 
 cons(<<Secret/binary>>) ->
@@ -40,6 +38,9 @@ time_now() ->
 %% Tests from RFC 6238 (https://tools.ietf.org/html/rfc6238#appendix-B)
 %% ============================================================================
 
+-ifdef(TEST).
+-include_lib("eunit/include/eunit.hrl").
+
 -record(test_case,
     { secret      :: binary()
     , time_step   :: integer()
@@ -51,10 +52,10 @@ time_now() ->
     , totp_value  :: integer()
     }).
 
-tests_rfc6238() ->
-    lists:foreach(fun test_case_execute/1, test_cases_from_rfc6238()).
+rfc6238_test_() ->
+    lists:map(fun test_case_to_tests/1, test_cases_from_rfc6238()).
 
-test_case_execute(#test_case
+test_case_to_tests(#test_case
     { secret      = Secret1
     , time_step   = TimeStep
     , t0          = TimeZero
@@ -65,16 +66,31 @@ test_case_execute(#test_case
     , totp_value  = TOTPValue
     }
 ) ->
-    T = time_interval(TimeZero, TimeNow, TimeStep),
-    THexPadded = t_to_padded_hex(T),
-    TOTPExtraParams = #totp_extra_params
-        { hash_algo = HashAlgo
-        , length    = Length
-        , time_zero = TimeZero
-        , time_now  = TimeNow
-        , time_step = TimeStep
+    [
+        {
+            "Time interval",
+            ?_assertEqual(
+                THexPadded,
+                t_to_padded_hex(time_interval(TimeZero, TimeNow, TimeStep))
+            )
         },
-    TOTPValue = cons(Secret1, TOTPExtraParams).
+        {
+            "TOTP value",
+            ?_assertEqual(
+                TOTPValue,
+                cons(
+                    Secret1,
+                    #totp_extra_params
+                    { hash_algo = HashAlgo
+                    , length    = Length
+                    , time_zero = TimeZero
+                    , time_now  = TimeNow
+                    , time_step = TimeStep
+                    }
+                )
+            )
+        }
+    ].
 
 -spec t_to_padded_hex(integer()) ->
     binary().
@@ -108,3 +124,5 @@ test_cases_from_rfc6238() ->
     , #test_case{secret = Secret32, time_step = TimeStep, t0 = T0, time = 20000000000 , t_in_hex = <<"0000000027BC86AA">> , mode = sha256 , totp_digits = 8 , totp_value = 77737706}
     , #test_case{secret = Secret64, time_step = TimeStep, t0 = T0, time = 20000000000 , t_in_hex = <<"0000000027BC86AA">> , mode = sha512 , totp_digits = 8 , totp_value = 47863826}
     ].
+
+-endif.
