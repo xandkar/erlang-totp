@@ -1,4 +1,8 @@
-[{<<"hotp">>,
-  {git,"https://github.com/xandkar/erlang-hotp.git",
-       {ref,"a277117c1204d37aef0cf35ebc4fc16e40fec259"}},
-  0}].
+{"1.2.0",
+[{<<"hotp">>,{pkg,<<"hotp">>,<<"1.0.1">>},0}]}.
+[
+{pkg_hash,[
+ {<<"hotp">>, <<"7C07D278D947FB5E9EBAD4A5713E2D36A1BA255D4F7545EE8602B15236DEC4EC">>}]},
+{pkg_hash_ext,[
+ {<<"hotp">>, <<"B763180B775E4D8542B8FC0D98F208239A3796663325C3C3419E73612CFCFB33">>}]}
+].
