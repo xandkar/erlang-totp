@@ -8,10 +8,14 @@
     , cons/2
     ]).
 
+-type t() :: pos_integer().
+
+-spec cons(Secret :: binary()) -> t().
 cons(<<Secret/binary>>) ->
     TimeNow = time_now(),
     cons(Secret, #totp_extra_params{time_now = TimeNow}).
 
+-spec cons(Secret :: binary(), #totp_extra_params{}) -> t().
 cons(<<Secret/binary>>, #totp_extra_params
     { hash_algo = HashAlgo
     , length    = Length
@@ -51,6 +55,11 @@ time_now() ->
     , totp_digits :: integer()
     , totp_value  :: integer()
     }).
+
+basic_uniqueness_test() ->
+    Secret1 = <<"foo">>,
+    Secret2 = <<"bar">>,
+    ?assertNotEqual(cons(Secret1), cons(Secret2)).
 
 rfc6238_test_() ->
     lists:map(fun test_case_to_tests/1, test_cases_from_rfc6238()).

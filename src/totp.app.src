@@ -1,7 +1,7 @@
 {application, totp,
  [
   {description, "Time-Based One-Time Password Algorithm, as described in RFC 6238"},
-  {vsn, "0.0.2"},
+  {vsn, "0.0.3"},
   {registered, []},
   {applications, [
                   kernel,
